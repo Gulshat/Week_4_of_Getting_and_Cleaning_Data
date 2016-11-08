@@ -34,3 +34,34 @@ summary(isUnited)
 # answer
 #    Mode   FALSE    TRUE    NA's 
 # logical     187       3       0 
+
+# 4 question
+# load data
+url1 <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"
+destination2 <- "/Users/gulsat/R_coursera/Week_4_of_Getting_and_Cleaning_Data/data3.csv"
+
+download.file(url1, destfile = destination2, method = "curl")
+
+# read data
+data3 <- read.csv("data3.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# Match the data based on the country shortcode. Of the countries for which 
+# the end of the fiscal year is available, how many end in June?
+
+names(data3)
+
+machedData <- merge(data2, data3, by.x = "CountryCode", by.y = "CountryCode")
+
+fye <- grepl("fiscal year end", tolower(machedData$Special.Notes))
+isJune <- grepl("june", tolower(machedData$Special.Notes))
+table(fye, isJune)
+
+# answer
+#        isJune
+# fye     FALSE TRUE
+# FALSE   155    3
+# TRUE     18   13
+
+
+
+
